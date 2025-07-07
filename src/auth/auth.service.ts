@@ -14,13 +14,25 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userRepository.findOne({ where: { email } });
 
-    if (!user || user.password !== password) {
+    if (!user || !(await user.validatePassword(password))) {
       throw new UnauthorizedException('Geçersiz kimlik bilgileri');
     }
 
-    const payload = { email: user.email, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
+    
+    const payload = {
+      email: user.email,
+      sub: user.id,
+      role: user.role, 
     };
+
+   return {
+  access_token: this.jwtService.sign(payload),
+  user: {
+    id: user.id,
+    email: user.email,
+    role: user.role,
+  },
+};
+
   }
 }

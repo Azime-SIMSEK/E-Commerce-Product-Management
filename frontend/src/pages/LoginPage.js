@@ -25,6 +25,7 @@ function LoginPage() {
       navigate("/products"); // Kullanıcıyı ürünler sayfasına yönlendirir
     } catch (error) {
       if (error.response) {
+        navigate("/Error"); 
         // Sunucu yanıt döndürdüyse (örneğin yanlış şifre vs.)
         setError(error.response.data.message || "Login Failed!");
       } else {
@@ -35,6 +36,7 @@ function LoginPage() {
   };
 
   return (
+  <div className="login-wrapper"> 
     <div className="login-container" >
       <h2>Login</h2>
       {error && <p style={{ color: "red" }}>{error}</p>} 
@@ -55,10 +57,9 @@ function LoginPage() {
         />
         <button type="submit">Login</button>
       </form>
-      <p>Note: Test User Information: <b>test@example.com</b> | Password: <b>123456</b></p>
 
     </div>
- 
+  </div>
   );
 }
 

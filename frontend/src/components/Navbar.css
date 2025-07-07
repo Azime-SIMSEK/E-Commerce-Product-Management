@@ -1,0 +1,45 @@
+.navbar {
+  position: fixed;         /* Sabit konum */
+  top: 0;                  /* Sayfanın en üstüne yapıştır */
+  left: 0;
+  width: 100%;
+  background-color: #8d525295;
+  padding: 15px 15px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 1000;   
+}
+
+.navbar-logo {
+  margin-left: 30px;
+  color:rgb(241, 225, 225);
+  font-size: 30px;
+  font-weight: bold;
+  text-shadow:0 0 15px rgb(255, 253, 253);
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-links button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.navbar-links button:hover {
+  background-color: #c0392b;
+}

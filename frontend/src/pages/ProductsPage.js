@@ -1,21 +1,34 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import Navbar from "../components/Navbar";
+
 
 function ProductsPage() {
   const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null); // Düzenlenen ürün
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [role, setRole] = useState(""); 
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (!token) {
+      navigate("/");
+      return;
+    }
+
+    try {
+      const decoded = jwtDecode(token);
+      setRole(decoded.role); 
+    } catch (e) {
+      alert("Invalid token. Please log in again.");
+      localStorage.removeItem("token");
       navigate("/");
       return;
     }
@@ -47,11 +60,11 @@ function ProductsPage() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      setProducts([...products, response.data]); // Listeyi günceller
+      setProducts([...products, response.data]);
       setName("");
       setPrice("");
       setDescription("");
-      setShowAddModal(false); // Modalı kapatır
+      setShowAddModal(false);
     } catch (error) {
       alert("An error occurred while adding the product! You might not have the necessary permissions.");
     }
@@ -77,7 +90,7 @@ function ProductsPage() {
       );
 
       setProducts(products.map((p) => (p.id === selectedProduct.id ? response.data : p)));
-      setShowEditModal(false); // Modalı kapat
+      setShowEditModal(false);
     } catch (error) {
       alert("An error occurred while updating the product!");
     }
@@ -94,19 +107,22 @@ function ProductsPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setProducts(products.filter((product) => product.id !== id)); // Listeyi günceller
+      setProducts(products.filter((product) => product.id !== id));
     } catch (error) {
       alert("An error occurred while deleting the product!");
     }
   };
 
   return (
-    <div>
+    <div className="products-page">
+       <Navbar />
       <h1>Product List</h1>
-      <button onClick={() => setShowAddModal(true)}>Add New Product</button>
+      
+      {role === "admin" && (
+        <button className="add-product-btn" onClick={() => setShowAddModal(true)}>Add New Product</button>
+      )}
 
-      {/* Yeni Ürün Ekleme Modali */}
-      {showAddModal && (
+      {showAddModal && role === "admin" && (
         <div className="modal">
           <div className="modal-content">
             <h3>Add New Product</h3>
@@ -121,8 +137,7 @@ function ProductsPage() {
         </div>
       )}
 
-      {/* Ürün Düzenleme Modali */}
-      {showEditModal && (
+      {showEditModal && role === "admin" && (
         <div className="modal">
           <div className="modal-content">
             <h3>Edit Product</h3>
@@ -137,7 +152,6 @@ function ProductsPage() {
         </div>
       )}
 
-      {/* Ürünleri Tablo Olarak Listeleme */}
       {products.length === 0 ? (
         <p>No products available yet.</p>
       ) : (
@@ -148,7 +162,7 @@ function ProductsPage() {
               <th>Product Name</th>
               <th>Price</th>
               <th>Description</th>
-              <th>Operations</th>
+              {role === "admin" && <th>Operations</th>}
             </tr>
           </thead>
           <tbody>
@@ -158,15 +172,17 @@ function ProductsPage() {
                 <td>{product.name}</td>
                 <td>{product.price}₺</td>
                 <td>{product.description}</td>
-                <td>
-                  <button onClick={() => handleEditClick(product)}>Edit</button>
-                  <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
-                </td>
+                {role === "admin" && (
+                  <td>
+                    <button onClick={() => handleEditClick(product)}>Edit</button>
+                    <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
         </table>
-      )}    
+      )}
     </div>
   );
 }

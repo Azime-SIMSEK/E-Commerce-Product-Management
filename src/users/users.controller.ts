@@ -6,7 +6,17 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  getUsers() {
+  async getUsers() {
     return this.usersService.getUsers();
+  }
+
+  @Get('create-admin')
+  async createAdmin() {
+    return this.usersService.createAdminUser();
+  }
+
+  @Get('create-test-user')  
+  async createTestUser() {
+    return this.usersService.createTestUser();
   }
 }
