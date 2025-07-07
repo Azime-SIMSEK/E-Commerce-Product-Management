@@ -1,39 +1,63 @@
 <<<<<<< HEAD
-# E-Commerce Product Management
- Full-stack product management system for an e-commerce platform. Backend: NestJS + PostgreSQL. Frontend: React. Features: JWT Authentication, CRUD operations, modals for add/edit, and secure API endpoints.
-=======
-# E-Ticaret Ürün Yönetim Sistemi
+# 🛒 E-Commerce Product Management System
 
-Bu proje, kullanıcıların giriş yaparak ürünleri yönetebildiği basit bir e-ticaret ürün yönetim sistemidir.
-**NestJS (Backend) ve React (Frontend) ile geliştirilmiştir.**
+A full-stack product management system built with **NestJS** for the backend and **React** for the frontend.
 
-## 📌 Proje Özellikleri
-- **JWT Authentication:** Kullanıcı giriş yaparak sisteme erişebilir.
-- **Ürün Yönetimi:** Ürün ekleme, düzenleme, silme ve listeleme işlemleri yapılabilir.
-- **Yetkilendirme:** Ürün işlemleri yalnızca giriş yapan kullanıcılar tarafından gerçekleştirilebilir.
+## 🔐 Features
 
----
+- User authentication with **JWT**
+- Role-based access control (**admin** and **user** roles)
+- Product CRUD operations
+- Admins can add/edit/delete products
+- Regular users can only view the product list
+- Responsive and modern UI with vanilla CSS
+- Protected routes based on authentication
+- PostgreSQL database with **TypeORM**
 
-## 🚀 Kurulum
+## 🚀 Tech Stack
 
-### 1️⃣ **Gereksinimler**
-Bu projeyi çalıştırabilmek için aşağıdaki teknolojilere ihtiyacınız var:
+- Backend: **NestJS**, **TypeORM**, **PostgreSQL**
+- Frontend: **React**, **Axios**
+- Auth: **JWT (Bearer Token)**
+- Styling: **Vanilla CSS**
+
+## 🖥️ Screenshots
+
+### Login Page
+
+![Login Page](./screenshots/login.png)
+
+### Admin - Product Dashboard
+
+![Admin View](./screenshots/admin-view.png)
+
+### User - Read Only View
+
+![User View](./screenshots/user-view.png)
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Azime-SIMSEK/E-Commerce-Product-Management.git
+cd E-Commerce-Product-Management
+```
+
+You need the following technologies to run this project:
 - [Node.js](https://nodejs.org/) (v16+ önerilir)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Git](https://git-scm.com/)
 
-### 2️⃣ **Projeyi Kopyalayın**
-```bash
- git clone https://github.com/kullanici/proje-adi.git
- cd proje-adi
-```
 
-### 3️⃣ **Backend Kurulumu (NestJS)**
+### 2. Backend Installation (NestJS)
+
 ```bash
- cd backend
+ cd e-commerce
  npm install
+ npm run start
 ```
-#### **Çevre Değişkenlerini Ayarlayın (.env dosyası oluşturun)**
+#### 3. Environment Variables (.env file)
 ```env
  DB_HOST=localhost
  DB_PORT=5432
@@ -43,12 +67,12 @@ Bu projeyi çalıştırabilmek için aşağıdaki teknolojilere ihtiyacınız va
  JWT_SECRET=supersecretkey
 ```
 
-#### **Veritabanını Çalıştırın**
+#### 4. Run the database
 ```bash
  npm run start:dev
 ```
 
-### 4️⃣ **Frontend Kurulumu (React)**
+### 5. Frontend Installation (React)
 ```bash
  cd frontend
  npm install
@@ -57,39 +81,30 @@ Bu projeyi çalıştırabilmek için aşağıdaki teknolojilere ihtiyacınız va
 
 ---
 
-## 📌 Kullanım
-### 1️⃣ **Test Kullanıcı Bilgileri**
-```
-Email: test@example.com
-Şifre: 123456
-```
-### 2️⃣ **Özellikler**
-- **Giriş Yap:** Kullanıcı bilgileriyle giriş yapılabilir.
-- **Ürünleri Görüntüle:** Giriş yapan kullanıcı ürünleri listeleyebilir.
-- **Ürün Ekle:** Yeni ürün ekleyebilirsiniz (Modal açılır).
-- **Ürün Güncelle:** Mevcut ürünleri güncelleyebilirsiniz (Modal açılır).
-- **Ürün Sil:** Ürünleri silmeden önce onay alınır.
+## 🔑 Default Users
+|  **Role	 |   Email	              |  Password** |
+|------------|------------------------|-------------|
+| **Admin**	 |   admin@example.com	  | admin123    |
+| **User**	 |   test@123.com	      |  456789     |
+
+🔒 Admin has full access.
+👥 User can only view products.
 
 ---
 
-## 🚀 API Endpointler (Backend İçin)
-| Metot  | URL | Açıklama |
-|--------|-----------------|--------------------------------|
-| **POST** | `/auth/login` | Kullanıcı giriş yapar |
-| **GET** | `/products` | Tüm ürünleri getirir |
-| **POST** | `/products` | Yeni ürün ekler |
-| **PUT** | `/products/:id` | Ürünü günceller |
-| **DELETE** | `/products/:id` | Ürünü siler |
+## 🎯 Developer Notes
+If you don’t configure the information in your .env file correctly, you won’t be able to connect to the database.
 
 ---
 
-## 🎯 Geliştirici Notları
-- Eğer `.env` dosyanızdaki bilgileri doğru ayarlamazsanız, veritabanına bağlanamazsınız.
-- JWT token süresi dolduğunda tekrar giriş yapmanız gerekmektedir.
+## 🧪 Testing
+To manually test:
+
+Login with one of the accounts above
+
+Try to access product creation/editing/deleting as a regular user (it will be blocked)
+
+Try as admin (it will succeed)
 
 ---
 
-## 💡 Katkıda Bulunma
-Eğer projeye katkıda bulunmak isterseniz, **Pull Request** açabilirsiniz! 🎉
-
->>>>>>> 039a9a5 (Initial commit)
